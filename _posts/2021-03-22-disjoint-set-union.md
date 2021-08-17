@@ -16,7 +16,7 @@ Mỗi nhóm trong DSU sẽ có một phần tử làm đại diện cho toàn b�
 Vì thế, ta có thể chia các nhóm, dựa trên việc ai là **parent** của mỗi phần tử.<br/>
 VD:
 
-<img src="/assets/dsu/dsu1.png" alt="dsu1"/>
+![dsu1](../assets/dsu/dsu1.png)
 
 Như trên hình, ta có thể thấy có 3 nhóm:
 * Nhóm 1: 1, 2, 3, 4
@@ -90,7 +90,7 @@ Cách này trẻ trâu ở điểm nào?
 
 Giả sử, đồ thị của chúng ta sau khi gán một hồi nhìn như này:
 
-<img src="/assets/dsu/dsu2.png" alt="dsu2"/>
+![dsu2](../assets/dsu/dsu2.png)
 
 `find(5)` sẽ đi hết nguyên đoạn đường ngược về đỉnh `1`. Tương tự, `find(10)` sẽ đi hết nguyên đoạn đường ngược về đỉnh `6`.
 Độ phức tạp của cách cài này sẽ là O(n).
@@ -103,7 +103,7 @@ Ta hoàn toàn có thể tối ưu cách cài đặt của chúng ta xuống đ�
 
 Giả sử ta có hình sau:
 
-<img src="/assets/dsu/dsu3.png" alt="dsu3"/>
+![dsu3](../assets/dsu/dsu3.png)
 
 Lúc này, `parent[3] = 2, parent[2] = 1`. Việc gọi `find(3)` sẽ phải đi qua đỉnh `2`, rồi mới qua đỉnh `1`.
 Trong khi đó, tại sao ta không nối thẳng `3` vào `1` luôn cho khỏe, để đỡ phải qua `2`?
@@ -131,18 +131,18 @@ Ta sẽ chỉ đề cập đến **Union by size**. **Union by rank** thực ch�
 Ta sẽ cần thêm mảng `size[]`. `size[x]` sẽ cho biết có bao nhiêu phần tử là con của `x` (bao gồm chính nó).<br/>
 VD:
 
-<img src="/assets/dsu/dsu4.png" alt="dsu4"/>
+![dsu4](../assets/dsu/dsu4.png)
 
 Dễ dàng thấy được `size[1] = 6`, `size[3] = 3`. Thế thì, mảng `size[]` này để làm gì?
 
 Nếu gộp 2 nhóm này với nhau, ta sẽ có hai trường hợp:
 * Gộp nhóm lớn vào nhóm nhỏ: độ cao của cây sẽ là 5.
 
-    <img src="/assets/dsu/dsu5.png" alt="dsu5"/>
+    ![dsu5](../assets/dsu/dsu5.png)
 
 * Gộp nhóm nhỏ vào nhóm lớn: độ cao của cây sẽ là 4.
 
-    <img src="/assets/dsu/dsu6.png" alt="dsu6"/>
+    ![dsu6](../assets/dsu/dsu6.png)
 
 Ta nhận xét rằng: gộp nhóm nhỏ vào nhóm lớn sẽ có lợi thế hơn so với gộp nhóm lớn vào nhóm nhỏ (độ cao 4 < 5).
 Vậy, trong hai parent, **ta sẽ gán parent có size nhỏ hơn vào size lớn hơn**.
