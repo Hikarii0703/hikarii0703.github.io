@@ -44,12 +44,12 @@ const int dy[] = { 0,  1,  0, -1};
 Ý nghĩa của 2 mảng trên để làm gì?<br/>
 Giả sử, ta đang ở ô có tọa độ **(x, y)**:
 
-![grid1](../assets/bfs_on_grid/grid1.png)
+![grid1](/assets/bfs_on_grid/grid1.png)
 
 Di chuyển sang các ô **kề cạnh**, tức là di chuyển sang các ô **(x - 1, y)**, **(x, y + 1)**, **(x + 1, y)**, **(x, y - 1)**:
 
 
-![grid2](../assets/bfs_on_grid/grid2.png)
+![grid2](/assets/bfs_on_grid/grid2.png)
 
 Vậy, ta chỉ cần dùng một vòng for đơn giản:
 ```cpp

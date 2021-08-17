@@ -14,15 +14,15 @@
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="Sparse Table là một data structure rất hay, có một số ứng dụng liên quan nhưng thường bị các bạn bỏ qua, vì những data structure khác như Segment Tree có thể thực hiện được những operator tương tự trong độ phức tạp tệ hơn nhưng chấp nhận được. Tuy nhiên, có một số bài toán có giới hạn thời gian rất chặt, nên việc sử dụng Sparse Table đôi khi là cần thiết." />
 <meta property="og:description" content="Sparse Table là một data structure rất hay, có một số ứng dụng liên quan nhưng thường bị các bạn bỏ qua, vì những data structure khác như Segment Tree có thể thực hiện được những operator tương tự trong độ phức tạp tệ hơn nhưng chấp nhận được. Tuy nhiên, có một số bài toán có giới hạn thời gian rất chặt, nên việc sử dụng Sparse Table đôi khi là cần thiết." />
-<link rel="canonical" href="/programming/cpp/cp/2021/08/17/sparse-table.html" />
-<meta property="og:url" content="/programming/cpp/cp/2021/08/17/sparse-table.html" />
+<link rel="canonical" href="http://localhost:4000/programming/cpp/cp/2021/08/17/sparse-table.html" />
+<meta property="og:url" content="http://localhost:4000/programming/cpp/cp/2021/08/17/sparse-table.html" />
 <meta property="og:site_name" content="just a little spark of light" />
 <meta property="og:type" content="article" />
 <meta property="article:published_time" content="2021-08-17T19:50:00+07:00" />
 <meta name="twitter:card" content="summary" />
 <meta property="twitter:title" content="[Vietnamese] Sparse Table" />
 <script type="application/ld+json">
-{"@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"/programming/cpp/cp/2021/08/17/sparse-table.html"},"dateModified":"2021-08-17T19:50:00+07:00","url":"/programming/cpp/cp/2021/08/17/sparse-table.html","headline":"[Vietnamese] Sparse Table","description":"Sparse Table là một data structure rất hay, có một số ứng dụng liên quan nhưng thường bị các bạn bỏ qua, vì những data structure khác như Segment Tree có thể thực hiện được những operator tương tự trong độ phức tạp tệ hơn nhưng chấp nhận được. Tuy nhiên, có một số bài toán có giới hạn thời gian rất chặt, nên việc sử dụng Sparse Table đôi khi là cần thiết.","datePublished":"2021-08-17T19:50:00+07:00","@context":"https://schema.org"}</script>
+{"@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/programming/cpp/cp/2021/08/17/sparse-table.html"},"dateModified":"2021-08-17T19:50:00+07:00","url":"http://localhost:4000/programming/cpp/cp/2021/08/17/sparse-table.html","headline":"[Vietnamese] Sparse Table","description":"Sparse Table là một data structure rất hay, có một số ứng dụng liên quan nhưng thường bị các bạn bỏ qua, vì những data structure khác như Segment Tree có thể thực hiện được những operator tương tự trong độ phức tạp tệ hơn nhưng chấp nhận được. Tuy nhiên, có một số bài toán có giới hạn thời gian rất chặt, nên việc sử dụng Sparse Table đôi khi là cần thiết.","datePublished":"2021-08-17T19:50:00+07:00","@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 
 
@@ -102,7 +102,7 @@
 
 <p>Ta sẽ gọi mảng <code class="language-plaintext highlighter-rouge">st[i][j]</code> là giá trị nhỏ nhất trong đoạn bắt đầu từ phần tử <code class="language-plaintext highlighter-rouge">i</code>, có độ dài là <code class="language-plaintext highlighter-rouge">2^j</code>. Như vậy, giá trị của <code class="language-plaintext highlighter-rouge">st[i][j]</code> sẽ như sau:</p>
 
-<p><img src="../assets/sparse_table/sp1.jpg" alt="sp1" /></p>
+<p><img src="/assets/sparse_table/sp1.jpg" alt="sp1" /></p>
 
 <p>Ta cần khai báo mảng <code class="language-plaintext highlighter-rouge">st[maxN][maxK]</code>. <code class="language-plaintext highlighter-rouge">maxN</code> là độ dài lớn nhất mà mảng <code class="language-plaintext highlighter-rouge">A</code> có thể đạt được, còn <code class="language-plaintext highlighter-rouge">maxK</code> phải vừa đủ sao cho <code class="language-plaintext highlighter-rouge">maxN &lt; 2^maxK</code>. Thường thì <code class="language-plaintext highlighter-rouge">maxK = 25</code> là khá ổn, vì <code class="language-plaintext highlighter-rouge">2^25 ~ 3 * 10^7</code>, trong khi thực tế gần như không có bài toán nào có <code class="language-plaintext highlighter-rouge">n</code> tới <code class="language-plaintext highlighter-rouge">3 * 10^7</code> cả.</p>
 
@@ -142,7 +142,7 @@
 
 <p>Dễ dàng thấy được, 2 đoạn này sẽ chồng lên nhau và không để hở phần tử nào cả, như hình minh họa dưới đây:</p>
 
-<p><img src="../assets/sparse_table/sp2.jpg" alt="sp2" /></p>
+<p><img src="/assets/sparse_table/sp2.jpg" alt="sp2" /></p>
 
 <p>Vậy, ta chỉ cần tính:</p>
 

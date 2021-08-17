@@ -31,7 +31,7 @@ Tương tự, ta có thể chia một đoạn thành nhiều đoạn có độ d
 
 Ta sẽ gọi mảng `st[i][j]` là giá trị nhỏ nhất trong đoạn bắt đầu từ phần tử `i`, có độ dài là `2^j`. Như vậy, giá trị của `st[i][j]` sẽ như sau:
 
-![sp1](../assets/sparse_table/sp1.jpg)
+![sp1](/assets/sparse_table/sp1.jpg)
 
 Ta cần khai báo mảng `st[maxN][maxK]`. `maxN` là độ dài lớn nhất mà mảng `A` có thể đạt được, còn `maxK` phải vừa đủ sao cho `maxN < 2^maxK`. Thường thì `maxK = 25` là khá ổn, vì `2^25 ~ 3 * 10^7`, trong khi thực tế gần như không có bài toán nào có `n` tới `3 * 10^7` cả.
 
@@ -69,7 +69,7 @@ Trong trường hợp độ dài không phải lũy thừa của 2, ta cũng s�
 
 Dễ dàng thấy được, 2 đoạn này sẽ chồng lên nhau và không để hở phần tử nào cả, như hình minh họa dưới đây:
 
-![sp2](../assets/sparse_table/sp2.jpg)
+![sp2](/assets/sparse_table/sp2.jpg)
 
 Vậy, ta chỉ cần tính:
 
