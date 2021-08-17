@@ -85,7 +85,7 @@ Chính vì thế, mà DSU còn có tên gọi khác là <strong>Union-Find</stro
 Vì thế, ta có thể chia các nhóm, dựa trên việc ai là <strong>parent</strong> của mỗi phần tử.<br />
 VD:</p>
 
-<p><img src="/assets/dsu/dsu1.png" alt="dsu1" /></p>
+<p><img src="../assets/dsu/dsu1.png" alt="dsu1" /></p>
 
 <p>Như trên hình, ta có thể thấy có 3 nhóm:</p>
 <ul>
@@ -157,7 +157,7 @@ Nếu hai thằng khác nhau, nghĩa là <code class="language-plaintext highlig
 
 <p>Giả sử, đồ thị của chúng ta sau khi gán một hồi nhìn như này:</p>
 
-<p><img src="/assets/dsu/dsu2.png" alt="dsu2" /></p>
+<p><img src="../assets/dsu/dsu2.png" alt="dsu2" /></p>
 
 <p><code class="language-plaintext highlighter-rouge">find(5)</code> sẽ đi hết nguyên đoạn đường ngược về đỉnh <code class="language-plaintext highlighter-rouge">1</code>. Tương tự, <code class="language-plaintext highlighter-rouge">find(10)</code> sẽ đi hết nguyên đoạn đường ngược về đỉnh <code class="language-plaintext highlighter-rouge">6</code>.
 Độ phức tạp của cách cài này sẽ là O(n).</p>
@@ -170,7 +170,7 @@ Nếu hai thằng khác nhau, nghĩa là <code class="language-plaintext highlig
 
 <p>Giả sử ta có hình sau:</p>
 
-<p><img src="/assets/dsu/dsu3.png" alt="dsu3" /></p>
+<p><img src="../assets/dsu/dsu3.png" alt="dsu3" /></p>
 
 <p>Lúc này, <code class="language-plaintext highlighter-rouge">parent[3] = 2, parent[2] = 1</code>. Việc gọi <code class="language-plaintext highlighter-rouge">find(3)</code> sẽ phải đi qua đỉnh <code class="language-plaintext highlighter-rouge">2</code>, rồi mới qua đỉnh <code class="language-plaintext highlighter-rouge">1</code>.
 Trong khi đó, tại sao ta không nối thẳng <code class="language-plaintext highlighter-rouge">3</code> vào <code class="language-plaintext highlighter-rouge">1</code> luôn cho khỏe, để đỡ phải qua <code class="language-plaintext highlighter-rouge">2</code>?</p>
@@ -197,7 +197,7 @@ Trong khi đó, tại sao ta không nối thẳng <code class="language-plaintex
 <p>Ta sẽ cần thêm mảng <code class="language-plaintext highlighter-rouge">size[]</code>. <code class="language-plaintext highlighter-rouge">size[x]</code> sẽ cho biết có bao nhiêu phần tử là con của <code class="language-plaintext highlighter-rouge">x</code> (bao gồm chính nó).<br />
 VD:</p>
 
-<p><img src="/assets/dsu/dsu4.png" alt="dsu4" /></p>
+<p><img src="../assets/dsu/dsu4.png" alt="dsu4" /></p>
 
 <p>Dễ dàng thấy được <code class="language-plaintext highlighter-rouge">size[1] = 6</code>, <code class="language-plaintext highlighter-rouge">size[3] = 3</code>. Thế thì, mảng <code class="language-plaintext highlighter-rouge">size[]</code> này để làm gì?</p>
 
@@ -206,12 +206,12 @@ VD:</p>
   <li>
     <p>Gộp nhóm lớn vào nhóm nhỏ: độ cao của cây sẽ là 5.</p>
 
-    <p><img src="/assets/dsu/dsu5.png" alt="dsu5" /></p>
+    <p><img src="../assets/dsu/dsu5.png" alt="dsu5" /></p>
   </li>
   <li>
     <p>Gộp nhóm nhỏ vào nhóm lớn: độ cao của cây sẽ là 4.</p>
 
-    <p><img src="/assets/dsu/dsu6.png" alt="dsu6" /></p>
+    <p><img src="../assets/dsu/dsu6.png" alt="dsu6" /></p>
   </li>
 </ul>
 

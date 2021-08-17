@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="">
+
+<head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<link href="https://fonts.googleapis.com/css?family=Merriweather:300|Raleway:400,700" rel="stylesheet">
+<link rel="stylesheet" href="/assets/css/style.css">
+<title>[Vietnamese] Sparse Table</title>
+<!-- Begin Jekyll SEO tag v2.7.1 -->
+<title>[Vietnamese] Sparse Table | just a little spark of light</title>
+<meta name="generator" content="Jekyll v3.9.0" />
+<meta property="og:title" content="[Vietnamese] Sparse Table" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Sparse Table là một data structure rất hay, có một số ứng dụng liên quan nhưng thường bị các bạn bỏ qua, vì những data structure khác như Segment Tree có thể thực hiện được những operator tương tự trong độ phức tạp tệ hơn nhưng chấp nhận được. Tuy nhiên, có một số bài toán có giới hạn thời gian rất chặt, nên việc sử dụng Sparse Table đôi khi là cần thiết." />
+<meta property="og:description" content="Sparse Table là một data structure rất hay, có một số ứng dụng liên quan nhưng thường bị các bạn bỏ qua, vì những data structure khác như Segment Tree có thể thực hiện được những operator tương tự trong độ phức tạp tệ hơn nhưng chấp nhận được. Tuy nhiên, có một số bài toán có giới hạn thời gian rất chặt, nên việc sử dụng Sparse Table đôi khi là cần thiết." />
+<link rel="canonical" href="/programming/cpp/cp/2021/08/17/sparse-table.html" />
+<meta property="og:url" content="/programming/cpp/cp/2021/08/17/sparse-table.html" />
+<meta property="og:site_name" content="just a little spark of light" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2021-08-17T19:50:00+07:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="[Vietnamese] Sparse Table" />
+<script type="application/ld+json">
+{"@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"/programming/cpp/cp/2021/08/17/sparse-table.html"},"dateModified":"2021-08-17T19:50:00+07:00","url":"/programming/cpp/cp/2021/08/17/sparse-table.html","headline":"[Vietnamese] Sparse Table","description":"Sparse Table là một data structure rất hay, có một số ứng dụng liên quan nhưng thường bị các bạn bỏ qua, vì những data structure khác như Segment Tree có thể thực hiện được những operator tương tự trong độ phức tạp tệ hơn nhưng chấp nhận được. Tuy nhiên, có một số bài toán có giới hạn thời gian rất chặt, nên việc sử dụng Sparse Table đôi khi là cần thiết.","datePublished":"2021-08-17T19:50:00+07:00","@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+
+
+<script type="text/javascript" src="/assets/js/darkmode.js"></script>
+
+</head><body>
+  <main class="container">
+    <section class="about">
+      <div class="about-header ">
+      <div class="about-title">
+      <a href="/">
+        
+        <img src="/assets/jalsol.png" alt="jalsol" />
+        
+      </a>
+      <h2 id="title">
+        <a href="/">jalsol</a>
+      </h2>
+      </div><p class="tagline">just a little spark of light</p></div>
+      
+      <ul class="social about-footer "><a href="https://github.com/jalsol" target="_blank">
+          <li>
+            <i class="icon-github-circled"></i>
+          </li>
+        </a></ul><nav class="navigation about-footer ">
+        <ul>
+          
+          <li>
+            <a href="/about">About</a>
+          </li>
+          
+        </ul>
+      </nav><p class="about-footer ">&copy;
+        2021</p><div class="about-footer ">
+        <p>Dark Mode
+          <i class="icon-moon"></i>
+          <label class="switch">
+            <input type="checkbox" class="dark-mode-toggle">
+            <span class="slider round" onclick="toggleDarkMode()"></span>
+          </label>
+        </p>
+      </div>
+    </section>
+    <section class="content">
+      <div class="post-container">
+  <a class="post-link" href="/programming/cpp/cp/2021/08/17/sparse-table.html">
+    <h2 class="post-title">[Vietnamese] Sparse Table</h2>
+  </a>
+  <div class="post-meta">
+    <div class="post-date"><i class="icon-calendar"></i>Aug 17, 2021</div><ul class="post-categories"><li>programming</li><li>cpp</li><li>cp</li></ul></div>
+  <div class="post">
+    <p><strong>Sparse Table</strong> là một data structure rất hay, có một số ứng dụng liên quan nhưng thường bị các bạn bỏ qua, vì những data structure khác như <strong>Segment Tree</strong> có thể thực hiện được những operator tương tự trong độ phức tạp tệ hơn nhưng chấp nhận được. Tuy nhiên, có một số bài toán có giới hạn thời gian rất chặt, nên việc sử dụng <strong>Sparse Table</strong> đôi khi là cần thiết.</p>
+
+<p><strong>Sparse Table</strong> thường được build trong O(n log n) và mỗi query được thực hiện trong O(1) (hoặc O(log n) tùy loại query, nhưng những query thực hiện trong O(1) mới là điểm sáng cần quan tâm). Hạn chế duy nhất của data structure này là không thể update. Tức là, nếu có phần tử phải thay đổi giá trị, ta chỉ còn cách tính lại toàn bộ bảng.</p>
+
+<h2 id="xây-dựng-sparse-table">Xây dựng Sparse Table</h2>
+
+<h3 id="bài-toán">Bài toán</h3>
+
+<p>Giả sử bài toán cần giải được phát biểu như sau:</p>
+
+<blockquote>
+  <p>“Cho một mảng A có n phần tử (n &lt;= 10^5), và q truy vấn có dạng (L, R) (q &lt;= 10^5). Với mỗi truy vấn, tìm phần tử nhỏ nhất trong mảng A từ L đến R.”</p>
+</blockquote>
+
+<p>Một trong những cách trâu bò là duyệt thẳng từ <code class="language-plaintext highlighter-rouge">A[L]</code> đến <code class="language-plaintext highlighter-rouge">A[R]</code>. Dễ thấy, độ phức tạp của mỗi truy vấn là O(n). Ta hoàn toàn có thể làm tốt hơn.</p>
+
+<h3 id="nhận-xét">Nhận xét</h3>
+
+<p>Mọi số nguyên dương đều có thể được viết thành tổng của các lũy thừa giảm dần của 2. VD: 13 = 8 + 4 + 1 = 2^3 + 2^2 + 2^0. Với một số nguyên dương <code class="language-plaintext highlighter-rouge">x</code> bất kỳ, ta sẽ cần tối đa <code class="language-plaintext highlighter-rouge">ceil(log2(x))</code> số hạng.</p>
+
+<p>Tương tự, ta có thể chia một đoạn thành nhiều đoạn có độ dài là lũy thừa giảm dần của 2. VD: <code class="language-plaintext highlighter-rouge">[2; 14]</code> (độ dài 13) có thể được chia ra thành <code class="language-plaintext highlighter-rouge">[2; 9]</code>, <code class="language-plaintext highlighter-rouge">[10; 13]</code>, <code class="language-plaintext highlighter-rouge">[14; 14]</code> (tương ứng với độ dài 8, 4, 1). Ta cũng sẽ có thể chia tối đa <code class="language-plaintext highlighter-rouge">ceil(log2(độ dài của đoạn))</code> thành nhiều đoạn nhỏ.</p>
+
+<p>Ý tưởng của Sparse Table là tính trước những đoạn có độ dài là lũy thừa của 2, rồi chỉ cần gộp lại những đoạn này là được.</p>
+
+<h3 id="xây-dựng">Xây dựng</h3>
+
+<p>Ta sẽ gọi mảng <code class="language-plaintext highlighter-rouge">st[i][j]</code> là giá trị nhỏ nhất trong đoạn bắt đầu từ phần tử <code class="language-plaintext highlighter-rouge">i</code>, có độ dài là <code class="language-plaintext highlighter-rouge">2^j</code>. Như vậy, giá trị của <code class="language-plaintext highlighter-rouge">st[i][j]</code> sẽ như sau:</p>
+
+<p><img src="../assets/sparse_table/sp1.jpg" alt="sp1" /></p>
+
+<p>Ta cần khai báo mảng <code class="language-plaintext highlighter-rouge">st[maxN][maxK]</code>. <code class="language-plaintext highlighter-rouge">maxN</code> là độ dài lớn nhất mà mảng <code class="language-plaintext highlighter-rouge">A</code> có thể đạt được, còn <code class="language-plaintext highlighter-rouge">maxK</code> phải vừa đủ sao cho <code class="language-plaintext highlighter-rouge">maxN &lt; 2^maxK</code>. Thường thì <code class="language-plaintext highlighter-rouge">maxK = 25</code> là khá ổn, vì <code class="language-plaintext highlighter-rouge">2^25 ~ 3 * 10^7</code>, trong khi thực tế gần như không có bài toán nào có <code class="language-plaintext highlighter-rouge">n</code> tới <code class="language-plaintext highlighter-rouge">3 * 10^7</code> cả.</p>
+
+<p>Đầu tiên, dễ dàng thấy được <code class="language-plaintext highlighter-rouge">2^0 = 1</code>, nên <code class="language-plaintext highlighter-rouge">st[i][0] = a[i]</code>.</p>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">n</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">st</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">a</span><span class="p">[</span><span class="n">i</span><span class="p">];</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>Tiếp tục, ta sẽ ghép 2 đoạn con lại với nhau. Giả sử, ta muốn tạo <code class="language-plaintext highlighter-rouge">st[i][j + 1]</code>, thì ta cần ghép 2 đoạn con sau:</p>
+<ul>
+  <li>Đoạn con bắt đầu từ <code class="language-plaintext highlighter-rouge">i</code>, có <code class="language-plaintext highlighter-rouge">2^j</code> phần tử, kết thúc tại <code class="language-plaintext highlighter-rouge">i + 2^j - 1</code></li>
+  <li>Đoạn con bắt đầu từ <code class="language-plaintext highlighter-rouge">i + 2^j</code>, có <code class="language-plaintext highlighter-rouge">2^j</code> phần tử, kết thúc tại <code class="language-plaintext highlighter-rouge">i + 2^(j + 1) - 1</code></li>
+</ul>
+
+<p>Vậy, ta có <code class="language-plaintext highlighter-rouge">st[i][j + 1] = min(st[i][j], st[i + 2^j][j])</code>.</p>
+
+<p>Thay <code class="language-plaintext highlighter-rouge">j</code> bằng <code class="language-plaintext highlighter-rouge">j - 1</code>, ta có <code class="language-plaintext highlighter-rouge">st[i][j] = min(st[i][j - 1], st[i + (1 &lt;&lt; j)][j - 1])</code>.</p>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">j</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span> <span class="n">j</span> <span class="o">&lt;</span> <span class="n">maxK</span><span class="p">;</span> <span class="o">++</span><span class="n">j</span><span class="p">)</span>
+    <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">+</span> <span class="p">(</span><span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="n">j</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="n">n</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span><span class="p">)</span>
+        <span class="n">st</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">min</span><span class="p">(</span><span class="n">st</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span> <span class="o">-</span> <span class="mi">1</span><span class="p">],</span> <span class="n">st</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="p">(</span><span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="p">(</span><span class="n">j</span> <span class="o">-</span> <span class="mi">1</span><span class="p">))][</span><span class="n">j</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]);</span>
+</code></pre></div></div>
+
+<p>Thực hiện dựng bảng như trên có độ phức tạp O(n log n).</p>
+
+<h3 id="trả-lời-truy-vấn">Trả lời truy vấn</h3>
+
+<p>Sau khi đã dựng được Sparse Table, ta tiếp tục trả lời truy vấn.</p>
+
+<p>Trong trường hợp độ dài không phải lũy thừa của 2, ta cũng sẽ tìm <code class="language-plaintext highlighter-rouge">j</code> lớn nhất có thể sao cho <code class="language-plaintext highlighter-rouge">2^j &lt; R - L + 1</code>. Sau đó, ta trả về giá trị nhỏ nhất của 2 đoạn sau:</p>
+<ul>
+  <li>Đoạn bắt đầu từ <code class="language-plaintext highlighter-rouge">L</code>, có <code class="language-plaintext highlighter-rouge">2^j</code> phần tử</li>
+  <li>Đoạn kết thúc tại <code class="language-plaintext highlighter-rouge">R</code>, có <code class="language-plaintext highlighter-rouge">2^j</code> phần tử, bắt đầu tại <code class="language-plaintext highlighter-rouge">R - 2^j + 1</code></li>
+</ul>
+
+<p>Dễ dàng thấy được, 2 đoạn này sẽ chồng lên nhau và không để hở phần tử nào cả, như hình minh họa dưới đây:</p>
+
+<p><img src="../assets/sparse_table/sp2.jpg" alt="sp2" /></p>
+
+<p>Vậy, ta chỉ cần tính:</p>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">int</span> <span class="n">j</span> <span class="o">=</span> <span class="n">log2</span><span class="p">(</span><span class="n">R</span> <span class="o">-</span> <span class="n">L</span> <span class="o">+</span> <span class="mi">1</span><span class="p">);</span>
+<span class="kt">int</span> <span class="n">minimum</span> <span class="o">=</span> <span class="n">min</span><span class="p">(</span><span class="n">st</span><span class="p">[</span><span class="n">L</span><span class="p">][</span><span class="n">j</span><span class="p">],</span> <span class="n">st</span><span class="p">[</span><span class="n">R</span> <span class="o">-</span> <span class="p">(</span><span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="n">j</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="p">][</span><span class="n">j</span><span class="p">]);</span>
+</code></pre></div></div>
+
+<p>Trong trường hợp độ dài là lũy thừa của 2, đoạn xanh và đoạn đỏ trên hình lúc này sẽ bằng nhau, nên tính đúng đắn của đoạn code trên vẫn đúng.</p>
+
+<p>Ta nhận thấy, mỗi giá trị trong mảng <code class="language-plaintext highlighter-rouge">st</code> đã được tính từ trước đó, nên độ phức tạp là O(1). Tuy vậy, ta vẫn cần phải tính toán <code class="language-plaintext highlighter-rouge">log2</code> một cách chính xác và nhanh chóng. Ta có thể tính mảng <code class="language-plaintext highlighter-rouge">log[]</code> như sau:</p>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">int</span> <span class="n">log</span><span class="p">[</span><span class="n">maxN</span> <span class="o">+</span> <span class="mi">1</span><span class="p">];</span>
+<span class="n">log</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+<span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;=</span> <span class="n">maxN</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span><span class="p">)</span>
+    <span class="n">log</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">log</span><span class="p">[</span><span class="n">i</span> <span class="o">/</span> <span class="mi">2</span><span class="p">]</span> <span class="o">+</span> <span class="mi">1</span><span class="p">;</span>
+</code></pre></div></div>
+
+<p>và <code class="language-plaintext highlighter-rouge">log[x]</code> sẽ là <code class="language-plaintext highlighter-rouge">log2(x)</code>.</p>
+
+<p>Còn một cách nữa là dùng hàm <code class="language-plaintext highlighter-rouge">__builtin_popcount</code> của GCC, có thể dùng <code class="language-plaintext highlighter-rouge">31 - __builtin_popcount(x)</code> hoặc <code class="language-plaintext highlighter-rouge">63 - __builtin_popcountll(x)</code> (tùy thuộc vào <code class="language-plaintext highlighter-rouge">x</code> là <code class="language-plaintext highlighter-rouge">int</code> hay <code class="language-plaintext highlighter-rouge">long long</code>). Với cách này thì ta không cần dựng thêm mảng nào, nhưng chỉ hoạt động với GCC. Với những compiler khác thì ta có thể tìm những lệnh tương đương, hoặc sử dụng lookup table.</p>
+
+<p>Đoạn được đánh dấu màu cam là đoạn chồng lặp, được tính 2 lần. Lý do đoạn này được đánh dấu sẽ được giải thích sau đây.</p>
+
+<h3 id="đoạn-trùng-lặp">Đoạn trùng lặp</h3>
+
+<p>Ta nhận xét rằng, <code class="language-plaintext highlighter-rouge">min(a, a) = a</code>, nghĩa là min của một số với chính nó cũng là chính nó. Vậy nên, đoạn màu cam vừa rồi được tính 2 lần sẽ không gây ảnh hưởng tới kết quả cuối cùng.</p>
+
+<p>Bất cứ hàm nào có cùng tính chất trên đều có thể được ứng dụng để query trong O(1): <code class="language-plaintext highlighter-rouge">max</code>, <code class="language-plaintext highlighter-rouge">min</code>, <code class="language-plaintext highlighter-rouge">gcd</code>, <code class="language-plaintext highlighter-rouge">lcm</code>… hay mọi hàm <code class="language-plaintext highlighter-rouge">f(x, y)</code> thỏa mãn <code class="language-plaintext highlighter-rouge">f(a, a) = a</code>. Hàm <code class="language-plaintext highlighter-rouge">min</code> là hàm được ứng dụng rộng rãi nhất bằng Sparse Table, nên một số người còn gọi data structure này là <strong>RMQ</strong> (Range Minimum Query).</p>
+
+<p>Những hàm khác, như hàm cộng hay nhân, vẫn có thể ứng dụng được Sparse Table, nhưng lúc này truy vấn không còn độ phức tạp O(1), mà là O(log n). Ý tưởng vẫn là chia nhỏ đoạn của truy vấn thành các đoạn nhỏ kề nhau có độ dài là lũy thừa 2 (xem lại giới thiệu ban đầu):</p>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">long</span> <span class="kt">long</span> <span class="n">sum</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+<span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">j</span> <span class="o">=</span> <span class="n">maxK</span> <span class="o">-</span> <span class="mi">1</span><span class="p">;</span> <span class="n">j</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">;</span> <span class="o">--</span><span class="n">j</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">((</span><span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="n">j</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="n">R</span> <span class="o">-</span> <span class="n">L</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">sum</span> <span class="o">+=</span> <span class="n">st</span><span class="p">[</span><span class="n">L</span><span class="p">][</span><span class="n">j</span><span class="p">];</span>
+        <span class="n">L</span> <span class="o">+=</span> <span class="p">(</span><span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="n">j</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>Một số data structure tương tự có thể áp dụng với mọi hàm hợp và có thể trả lời query trong O(1) có <strong>Disjoint Sparse Table</strong> và <strong>Sqrt Tree</strong>.</p>
+
+<h2 id="ứng-dụng">Ứng dụng</h2>
+
+<p>Trong trường hợp thời gian khá chặt, thì Sparse Table thường được lựa chọn vì có thể query trong O(1). Ngoài ra, khá nhiều implementation của LCA cũng được cài bằng Sparse Table.</p>
+
+<h2 id="bên-lề">Bên lề</h2>
+
+<ul>
+  <li>
+    <p>Có cách để cài đặt Sparse Table trong O(1). Tuy nhiên, vì trình độ của tác giả còn non và trick không quá well-known, nên tác giả sẽ để người đọc tự nghiên cứu.</p>
+  </li>
+  <li>
+    <p>Ban đầu, tác giả định lựa chọn Segment Tree để viết bài. Tuy nhiên, vì VNOI Wiki đang được rework lại và Segment Tree được số lượng vote rất cao nên tác giả hủy ý tưởng trên. Tình cờ, tác giả cũng gặp được một số bài tập có dùng Sparse Table để giảm độ phức tạp, nhận thấy chưa có blog tiếng Việt nào về Sparse Table, nên topic này đã được lựa chọn để viết.</p>
+  </li>
+</ul>
+
+  </div></div>
+
+    </section>
+    <footer class="">
+      <ul class="social about-footer "><a href="https://github.com/jalsol" target="_blank">
+          <li>
+            <i class="icon-github-circled"></i>
+          </li>
+        </a></ul><nav class="navigation about-footer ">
+        <ul>
+          
+          <li>
+            <a href="/about">About</a>
+          </li>
+          
+        </ul>
+      </nav><p class="about-footer ">&copy;
+        2021</p><div class="about-footer ">
+        <p>Dark Mode
+          <i class="icon-moon"></i>
+          <label class="switch">
+            <input type="checkbox" class="dark-mode-toggle">
+            <span class="slider round" onclick="toggleDarkMode()"></span>
+          </label>
+        </p>
+      </div>
+    </footer>
+  </main>
+  
+  <script type="text/javascript" src="/assets/js/darkmode.js"></script>
+  
+  <script src="/assets/js/simple-jekyll-search.min.js"></script>
+  <script src="/assets/js/search.js"></script>
+  
+</body>
+
+</html>
