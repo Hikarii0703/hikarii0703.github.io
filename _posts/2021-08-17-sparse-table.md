@@ -7,7 +7,7 @@ categories: programming cpp cp
 
 **Sparse Table** là một data structure rất hay, có một số ứng dụng liên quan nhưng thường bị các bạn bỏ qua, vì những data structure khác như **Segment Tree** có thể thực hiện được những operator tương tự trong độ phức tạp tệ hơn nhưng chấp nhận được. Tuy nhiên, có một số bài toán có giới hạn thời gian rất chặt, nên việc sử dụng **Sparse Table** đôi khi là cần thiết.
 
-**Sparse Table** thường được build trong O(n log n) và mỗi query được thực hiện trong O(1) (hoặc O(log n) tùy loại query, nhưng những query thực hiện trong O(1) mới là điểm sáng cần quan tâm). Hạn chế duy nhất của data structure này là không thể update. Tức là, nếu có phần tử phải thay đổi giá trị, ta chỉ còn cách tính lại toàn bộ bảng.
+**Sparse Table** thường được build trong `O(n log n)` và mỗi query được thực hiện trong `O(1)` (hoặc `O(log n)` tùy loại query, nhưng những query thực hiện trong `O(1)` mới là điểm sáng cần quan tâm). Hạn chế duy nhất của data structure này là không thể update. Tức là, nếu có phần tử phải thay đổi giá trị, ta chỉ còn cách tính lại toàn bộ bảng.
 
 ## Xây dựng Sparse Table
 
@@ -17,13 +17,13 @@ Giả sử bài toán cần giải được phát biểu như sau:
 
 > "Cho một mảng A có n phần tử (n <= 10^5), và q truy vấn có dạng (L, R) (q <= 10^5). Với mỗi truy vấn, tìm phần tử nhỏ nhất trong mảng A từ L đến R."
 
-Một trong những cách trâu bò là duyệt thẳng từ `A[L]` đến `A[R]`. Dễ thấy, độ phức tạp của mỗi truy vấn là O(n). Ta hoàn toàn có thể làm tốt hơn.
+Một trong những cách trâu bò là duyệt thẳng từ `A[L]` đến `A[R]`. Dễ thấy, độ phức tạp của mỗi truy vấn là `O(n)`. Ta hoàn toàn có thể làm tốt hơn.
 
 ### Nhận xét
 
 Mọi số nguyên dương đều có thể được viết thành tổng của các lũy thừa giảm dần của 2. VD: 13 = 8 + 4 + 1 = 2^3 + 2^2 + 2^0. Với một số nguyên dương `x` bất kỳ, ta sẽ cần tối đa `ceil(log2(x))` số hạng.
 
-Tương tự, ta có thể chia một đoạn thành nhiều đoạn có độ dài là lũy thừa giảm dần của 2. VD: `[2; 14]` (độ dài 13) có thể được chia ra thành `[2; 9]`, `[10; 13]`, `[14; 14]` (tương ứng với độ dài 8, 4, 1). Ta cũng sẽ có thể chia tối đa `ceil(log2(độ dài của đoạn))` thành nhiều đoạn nhỏ.
+Tương tự, ta có thể chia một đoạn thành nhiều đoạn có độ dài là lũy thừa giảm dần của 2. VD: `[2; 14]` (độ dài 13) có thể được chia ra thành `[2; 9]`, `[10; 13]`, `[14; 14]` (tương ứng với độ dài 8, 4, 1). Ta cũng sẽ có thể chia thành tối đa `ceil(log2(độ dài của đoạn))` đoạn nhỏ.
 
 Ý tưởng của Sparse Table là tính trước những đoạn có độ dài là lũy thừa của 2, rồi chỉ cần gộp lại những đoạn này là được.
 
@@ -51,7 +51,7 @@ Tiếp tục, ta sẽ ghép 2 đoạn con lại với nhau. Giả sử, ta muố
 
 Vậy, ta có `st[i][j + 1] = min(st[i][j], st[i + 2^j][j])`.
 
-Thay `j` bằng `j - 1`, ta có `st[i][j] = min(st[i][j - 1], st[i + (1 << j)][j - 1])`.
+Thay `j` bằng `j - 1`, ta có `st[i][j] = min(st[i][j - 1], st[i + (1 << (j - 1))][j - 1])`.
 
 ```cpp
 for (int j = 1; j < maxK; ++j)
@@ -59,13 +59,13 @@ for (int j = 1; j < maxK; ++j)
         st[i][j] = min(st[i][j - 1], st[i + (1 << (j - 1))][j - 1]);
 ```
 
-Thực hiện dựng bảng như trên có độ phức tạp O(n log n).
+Thực hiện dựng bảng như trên có độ phức tạp `O(n log n)`.
 
 ### Trả lời truy vấn
 
 Sau khi đã dựng được Sparse Table, ta tiếp tục trả lời truy vấn.
 
-Trong trường hợp độ dài không phải lũy thừa của 2, ta cũng sẽ tìm `j` lớn nhất có thể sao cho `2^j < R - L + 1`. Sau đó, ta trả về giá trị nhỏ nhất của 2 đoạn sau:
+Trong trường hợp độ dài không phải lũy thừa của 2, ta sẽ tìm `j` lớn nhất có thể sao cho `2^j < R - L + 1`. Sau đó, ta trả về giá trị nhỏ nhất của 2 đoạn sau:
 - Đoạn bắt đầu từ `L`, có `2^j` phần tử
 - Đoạn kết thúc tại `R`, có `2^j` phần tử, bắt đầu tại `R - 2^j + 1`
 
@@ -91,9 +91,9 @@ for (int i = 2; i <= maxN; ++i)
     log[i] = log[i / 2] + 1;
 ```
 
-và `log[x]` sẽ là `log2(x)`.
+và `log[x]` sẽ là `log2(x)`. Vậy, ta thay `j = log2(R - L + 1)` bằng `j = log[R - L + 1]`.
 
-Còn một cách nữa là dùng hàm `__builtin_popcount` của GCC, có thể dùng `31 - __builtin_popcount(x)` hoặc `63 - __builtin_popcountll(x)` (tùy thuộc vào `x` là `int` hay `long long`). Với cách này thì ta không cần dựng thêm mảng nào, nhưng chỉ hoạt động với GCC. Với những compiler khác thì ta có thể tìm những lệnh tương đương, hoặc sử dụng lookup table.
+Còn một cách nữa là dùng hàm `__builtin_popcount` của GCC, có thể dùng `31 - __builtin_clz(x)` hoặc `63 - __builtin_clzll(x)` (tùy thuộc vào `x` là `int` hay `long long`). Với cách này thì ta không cần dựng thêm mảng nào, nhưng chỉ hoạt động với GCC. Với những compiler khác thì ta có thể tìm những lệnh tương đương, hoặc sử dụng lookup table.
 
 Đoạn được đánh dấu màu cam là đoạn chồng lặp, được tính 2 lần. Lý do đoạn này được đánh dấu sẽ được giải thích sau đây.
 
