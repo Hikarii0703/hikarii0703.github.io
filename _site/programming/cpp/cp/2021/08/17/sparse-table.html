@@ -14,15 +14,15 @@
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="Sparse Table là một data structure rất hay, có một số ứng dụng liên quan nhưng thường bị các bạn bỏ qua, vì những data structure khác như Segment Tree có thể thực hiện được những operator tương tự trong độ phức tạp tệ hơn nhưng chấp nhận được. Tuy nhiên, có một số bài toán có giới hạn thời gian rất chặt, nên việc sử dụng Sparse Table đôi khi là cần thiết." />
 <meta property="og:description" content="Sparse Table là một data structure rất hay, có một số ứng dụng liên quan nhưng thường bị các bạn bỏ qua, vì những data structure khác như Segment Tree có thể thực hiện được những operator tương tự trong độ phức tạp tệ hơn nhưng chấp nhận được. Tuy nhiên, có một số bài toán có giới hạn thời gian rất chặt, nên việc sử dụng Sparse Table đôi khi là cần thiết." />
-<link rel="canonical" href="http://localhost:4000/programming/cpp/cp/2021/08/17/sparse-table.html" />
-<meta property="og:url" content="http://localhost:4000/programming/cpp/cp/2021/08/17/sparse-table.html" />
+<link rel="canonical" href="/programming/cpp/cp/2021/08/17/sparse-table.html" />
+<meta property="og:url" content="/programming/cpp/cp/2021/08/17/sparse-table.html" />
 <meta property="og:site_name" content="just a little spark of light" />
 <meta property="og:type" content="article" />
 <meta property="article:published_time" content="2021-08-17T19:50:00+07:00" />
 <meta name="twitter:card" content="summary" />
 <meta property="twitter:title" content="[Vietnamese] Sparse Table" />
 <script type="application/ld+json">
-{"@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/programming/cpp/cp/2021/08/17/sparse-table.html"},"dateModified":"2021-08-17T19:50:00+07:00","url":"http://localhost:4000/programming/cpp/cp/2021/08/17/sparse-table.html","headline":"[Vietnamese] Sparse Table","description":"Sparse Table là một data structure rất hay, có một số ứng dụng liên quan nhưng thường bị các bạn bỏ qua, vì những data structure khác như Segment Tree có thể thực hiện được những operator tương tự trong độ phức tạp tệ hơn nhưng chấp nhận được. Tuy nhiên, có một số bài toán có giới hạn thời gian rất chặt, nên việc sử dụng Sparse Table đôi khi là cần thiết.","datePublished":"2021-08-17T19:50:00+07:00","@context":"https://schema.org"}</script>
+{"@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"/programming/cpp/cp/2021/08/17/sparse-table.html"},"dateModified":"2021-08-17T19:50:00+07:00","url":"/programming/cpp/cp/2021/08/17/sparse-table.html","headline":"[Vietnamese] Sparse Table","description":"Sparse Table là một data structure rất hay, có một số ứng dụng liên quan nhưng thường bị các bạn bỏ qua, vì những data structure khác như Segment Tree có thể thực hiện được những operator tương tự trong độ phức tạp tệ hơn nhưng chấp nhận được. Tuy nhiên, có một số bài toán có giới hạn thời gian rất chặt, nên việc sử dụng Sparse Table đôi khi là cần thiết.","datePublished":"2021-08-17T19:50:00+07:00","@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 
 
@@ -119,6 +119,8 @@
   <li>Đoạn con bắt đầu từ <code class="language-plaintext highlighter-rouge">i + 2^j</code>, có <code class="language-plaintext highlighter-rouge">2^j</code> phần tử, kết thúc tại <code class="language-plaintext highlighter-rouge">i + 2^(j + 1) - 1</code></li>
 </ul>
 
+<p><img src="/assets/sparse_table/sp3.jpg" alt="sp3" /></p>
+
 <p>Vậy, ta có <code class="language-plaintext highlighter-rouge">st[i][j + 1] = min(st[i][j], st[i + 2^j][j])</code>.</p>
 
 <p>Thay <code class="language-plaintext highlighter-rouge">j</code> bằng <code class="language-plaintext highlighter-rouge">j - 1</code>, ta có <code class="language-plaintext highlighter-rouge">st[i][j] = min(st[i][j - 1], st[i + (1 &lt;&lt; j)][j - 1])</code>.</p>
@@ -170,9 +172,9 @@
 
 <p>Ta nhận xét rằng, <code class="language-plaintext highlighter-rouge">min(a, a) = a</code>, nghĩa là min của một số với chính nó cũng là chính nó. Vậy nên, đoạn màu cam vừa rồi được tính 2 lần sẽ không gây ảnh hưởng tới kết quả cuối cùng.</p>
 
-<p>Bất cứ hàm nào có cùng tính chất trên đều có thể được ứng dụng để query trong O(1): <code class="language-plaintext highlighter-rouge">max</code>, <code class="language-plaintext highlighter-rouge">min</code>, <code class="language-plaintext highlighter-rouge">gcd</code>, <code class="language-plaintext highlighter-rouge">lcm</code>… hay mọi hàm <code class="language-plaintext highlighter-rouge">f(x, y)</code> thỏa mãn <code class="language-plaintext highlighter-rouge">f(a, a) = a</code>. Hàm <code class="language-plaintext highlighter-rouge">min</code> là hàm được ứng dụng rộng rãi nhất bằng Sparse Table, nên một số người còn gọi data structure này là <strong>RMQ</strong> (Range Minimum Query).</p>
+<p>Vậy, những hàm <code class="language-plaintext highlighter-rouge">f(x, y)</code> sao cho <code class="language-plaintext highlighter-rouge">f(a, a) = a</code> (i.e. đưa một số và chính nó vào hàm thì kết quả là chính nó), đều có thể ứng dụng được Sparse Table như trên với độ phức tạp <code class="language-plaintext highlighter-rouge">O(f(x, y))</code> (i.e. nếu <code class="language-plaintext highlighter-rouge">f</code> là phép <code class="language-plaintext highlighter-rouge">max</code> hay <code class="language-plaintext highlighter-rouge">min</code> thì <code class="language-plaintext highlighter-rouge">O(1)</code>, phép <code class="language-plaintext highlighter-rouge">gcd</code> hay <code class="language-plaintext highlighter-rouge">lcm</code> thì <code class="language-plaintext highlighter-rouge">O(log(min(x, y)))</code>…).</p>
 
-<p>Những hàm khác, như hàm cộng hay nhân, vẫn có thể ứng dụng được Sparse Table, nhưng lúc này truy vấn không còn độ phức tạp O(1), mà là O(log n). Ý tưởng vẫn là chia nhỏ đoạn của truy vấn thành các đoạn nhỏ kề nhau có độ dài là lũy thừa 2 (xem lại giới thiệu ban đầu):</p>
+<p>Những hàm khác, như hàm cộng hay nhân, vẫn có thể ứng dụng được Sparse Table, nhưng lúc này truy vấn không còn độ phức tạp <code class="language-plaintext highlighter-rouge">O(1)</code>, mà là <code class="language-plaintext highlighter-rouge">O(log n)</code>. Ý tưởng vẫn là chia nhỏ đoạn của truy vấn thành các đoạn nhỏ kề nhau có độ dài là lũy thừa 2 (xem lại giới thiệu ban đầu):</p>
 
 <div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">long</span> <span class="kt">long</span> <span class="n">sum</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
 <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">j</span> <span class="o">=</span> <span class="n">maxK</span> <span class="o">-</span> <span class="mi">1</span><span class="p">;</span> <span class="n">j</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">;</span> <span class="o">--</span><span class="n">j</span><span class="p">)</span> <span class="p">{</span>
@@ -183,20 +185,23 @@
 <span class="p">}</span>
 </code></pre></div></div>
 
-<p>Một số data structure tương tự có thể áp dụng với mọi hàm hợp và có thể trả lời query trong O(1) có <strong>Disjoint Sparse Table</strong> và <strong>Sqrt Tree</strong>.</p>
+<p>Một số data structure tương tự có thể áp dụng với mọi hàm hợp và có thể trả lời query trong <code class="language-plaintext highlighter-rouge">O(1)</code> bao gồm <strong>Disjoint Sparse Table</strong> và <strong>Sqrt Tree</strong>.</p>
 
 <h2 id="ứng-dụng">Ứng dụng</h2>
 
-<p>Trong trường hợp thời gian khá chặt, thì Sparse Table thường được lựa chọn vì có thể query trong O(1). Ngoài ra, khá nhiều implementation của LCA cũng được cài bằng Sparse Table.</p>
+<p>Trong trường hợp thời gian khá chặt và không yêu cầu update, Sparse Table thường được lựa chọn. Ngoài ra, khá nhiều implementation của LCA cũng được cài bằng Sparse Table.</p>
 
 <h2 id="bên-lề">Bên lề</h2>
 
 <ul>
   <li>
-    <p>Có cách để cài đặt Sparse Table trong O(1). Tuy nhiên, vì trình độ của tác giả còn non và trick không quá well-known, nên tác giả sẽ để người đọc tự nghiên cứu.</p>
+    <p>Hàm <code class="language-plaintext highlighter-rouge">min</code> là hàm được ứng dụng rộng rãi nhất bằng Sparse Table, nên một số người còn gọi data structure này là <strong>RMQ</strong> (Range Minimum Query).</p>
   </li>
   <li>
-    <p>Ban đầu, tác giả định lựa chọn Segment Tree để viết bài. Tuy nhiên, vì VNOI Wiki đang được rework lại và Segment Tree được số lượng vote rất cao nên tác giả hủy ý tưởng trên. Tình cờ, tác giả cũng gặp được một số bài tập có dùng Sparse Table để giảm độ phức tạp, nhận thấy chưa có blog tiếng Việt nào về Sparse Table, nên topic này đã được lựa chọn để viết.</p>
+    <p>Có cách để cài đặt Sparse Table trong <code class="language-plaintext highlighter-rouge">O(1)</code> (và thường được dùng để tính LCA trong <code class="language-plaintext highlighter-rouge">O(1)</code>). Tuy nhiên, vì trình độ của tác giả còn non và trick không quá well-known, nên tác giả sẽ để bạn đọc tự nghiên cứu.</p>
+  </li>
+  <li>
+    <p>Ban đầu, tác giả định lựa chọn Segment Tree để viết bài. Tuy nhiên, vì VNOI Wiki đang được rework lại và Segment Tree được số lượng vote rất cao nên tác giả hủy ý tưởng trên. Tình cờ, tác giả nhận thấy chưa có blog tiếng Việt nào viết riêng về Sparse Table, nên topic này đã được lựa chọn để viết.</p>
   </li>
 </ul>
 
