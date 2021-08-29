@@ -82,7 +82,7 @@ int minimum = min(st[L][j], st[R - (1 << j) + 1][j]);
 
 Trong trường hợp độ dài là lũy thừa của 2, đoạn xanh và đoạn đỏ trên hình lúc này sẽ bằng nhau, nên tính đúng đắn của đoạn code trên vẫn đúng.
 
-Ta nhận thấy, mỗi giá trị trong mảng `st` đã được tính từ trước đó, nên độ phức tạp là O(1). Tuy vậy, ta vẫn cần phải tính toán `log2` một cách chính xác và nhanh chóng. Ta có thể tính mảng `log[]` như sau:
+Ta nhận thấy, mỗi giá trị trong mảng `st` đã được tính từ trước đó, nên độ phức tạp là `O(1)`. Tuy vậy, ta vẫn cần phải tính toán `log2` một cách chính xác và nhanh chóng. Ta có thể tính mảng `log[]` như sau:
 
 ```cpp
 int log[maxN + 1];
@@ -125,6 +125,6 @@ Trong trường hợp thời gian khá chặt và không yêu cầu update, Spar
 
 - Hàm `min` là hàm được ứng dụng rộng rãi nhất bằng Sparse Table, nên một số người còn gọi data structure này là **RMQ** (Range Minimum Query).
 
-- Có cách để cài đặt Sparse Table trong `O(1)` (và thường được dùng để tính LCA trong `O(1)`). Tuy nhiên, vì trình độ của tác giả còn non và trick không quá well-known, nên tác giả sẽ để bạn đọc tự nghiên cứu.
+- Có cách để cài đặt Sparse Table trong `O(1)` (và thường được dùng để tính LCA trong `O(1)`). ~~Tuy nhiên, vì trình độ của tác giả còn non và trick không quá well-known, nên tác giả sẽ để bạn đọc tự nghiên cứu~~. Tác giả đã đỡ non hơn một chút, nên sẽ có một bài biết về LCA `O(1)` sau này.
 
 - Ban đầu, tác giả định lựa chọn Segment Tree để viết bài. Tuy nhiên, vì VNOI Wiki đang được rework lại và Segment Tree được số lượng vote rất cao nên tác giả hủy ý tưởng trên. Tình cờ, tác giả nhận thấy chưa có blog tiếng Việt nào viết riêng về Sparse Table, nên topic này đã được lựa chọn để viết.
